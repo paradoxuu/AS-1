@@ -2,7 +2,7 @@ using Plots
 using BenchmarkTools
 
 function vfsolve(vnew, kgrid, tolerance, imax)
-    α = 1.5
+    α = 0.37
     δ = 0.1
     β = 0.95
     σ = 1.5
@@ -27,14 +27,13 @@ function vfsolve(vnew, kgrid, tolerance, imax)
 end
 
 
-kupper = 10
+kupper = 5
 klower = 0.05
 n = 1000
 kgrid = collect(range(klower, stop = kupper, length = n))
 (v, kprime, kprimeindex) = vfsolve(zeros(n), kgrid, 0.001, 1000);
 
-scatter(kgrid, v, label = "v")
-scatter(kgrid, kprime, label = "k'")
+plot(kgrid, kprime, label = "k'")
 
 
 function policy(x)
@@ -50,7 +49,7 @@ for i in 1:T
     kpath[i] = k
 end 
 time = collect(range(1, T, length = T))
-scatter(time, kpath, label = "kpath")
+plot(time, kpath, label = "kpath")
 
 
 
